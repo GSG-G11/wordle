@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
 import Input from '../components/input/Input';
 import Letter from '../components/Letter';
@@ -38,7 +39,6 @@ function Home() {
     }
   }, [wordInput]);
 
-  console.log(cases);
   return (
     <div className="Home">
       <h1>{word.word}</h1>
