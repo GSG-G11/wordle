@@ -40,7 +40,7 @@ function Home() {
 
   console.log(cases);
   return (
-    <div className="App">
+    <div className="Home">
       <h1>{word.word}</h1>
       <Input submitInput={submitInput} length={word.word?.length} />
       <div className="letters">
