@@ -1,69 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import 'remixicon/fonts/remixicon.css';
-import Input from './components/input/Input';
-import Letter from './components/Letter';
+import {
+  Routes,
+  Route,
+} from 'react-router-dom';
 import Header from './components/header/index';
+import Home from './pages/Home';
+import About from './pages/About';
+import NotFound from './pages/NotFound';
 import './App.css';
 
 function App() {
-  const [word, setWord] = useState({});
-  const [wordInput, setWordInput] = useState('');
-  const [isRight, setRight] = useState(false);
-  const [cases, setCases] = useState([]);
-  const submitInput = (inputValue) => {
-    setWordInput(inputValue);
-  };
-  useEffect(() => {
-    fetch('https://random-words-api.vercel.app/word')
-      .then((res) => res.json())
-      .then((data) => {
-        setWord(data[0]);
-      })
-      .catch((err) => console.log(err));
-  }, []);
-  useEffect(() => {
-    if (wordInput) {
-      if (wordInput.toLowerCase() === word.word.toLowerCase()) {
-        setRight(true);
-      }
-      const wordArr = word.word.split('');
-      const inputtedArr = wordInput.split('');
-      setCases([]);
-      inputtedArr.forEach((letter, i) => {
-        if (letter === wordArr[i]) {
-          setCases((prevCases) => [...prevCases, 'correct']);
-        } else if (wordArr.includes(letter)) {
-          setCases((prevCases) => [...prevCases, 'close']);
-        } else {
-          setCases((prevCases) => [...prevCases, 'wrong']);
-        }
-      });
-    }
-  }, [wordInput]);
-
-  console.log(cases);
   return (
     <div className="App">
       <Header />
-      <h1>{word.word}</h1>
-      <Input submitInput={submitInput} length={word.word?.length} />
-      <div className="letters">
-        {wordInput
-          ? wordInput.toLowerCase().split('')
-            .map((letter, index) => (
-              <Letter letter={letter} iCase={cases[index]} />
-            ))
-          : null
-          }
-      </div>
-      {isRight && (
-        <p>
-          ( Congrants ... the definition is
-          <br />
-          {word?.definition}
-          )
-        </p>
-      )}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </div>
   );
 }
