@@ -1,7 +1,7 @@
 import React from 'react';
 import './letter.css';
 
-function Letter({ letter, iCase}) {
+function Letter({ letter, iCase }) {
   let bg = '#787C7E';
   if (iCase === 'correct') {
     bg = '#6AAA64';

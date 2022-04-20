@@ -23,7 +23,7 @@ function Input({ submitInput, length }) {
   }, [input]);
 
   return (
-     <input 
+    <input
       type="text"
       id="input"
       maxLength={length}
