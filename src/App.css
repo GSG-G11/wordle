@@ -1,5 +1,5 @@
  .App {
-  text-align: center;
+  /* text-align: center; */
 }
 /*
 .App-logo {
@@ -36,8 +36,30 @@
     transform: rotate(360deg);
   }
 } */
-
+a {
+  text-decoration: none;
+}
 .letters {
   display: flex;
   flex-direction: row;
+}
+.about {
+  width: 50vw;
+  margin: 1em auto;
+}
+.ex-true {
+  display: flex;
+  flex-direction: column;
+}
+.ex-true-word {
+  display: flex;
+}
+.ex-true-word span {
+  border: 2px solid #878a8c;
+  margin-right: 1em;
+  padding: 0.2em 0.5em;
+  font-weight: bold;
+  width: 20px;
+  font-size: 1.5em;
+  text-align: center;
 }
