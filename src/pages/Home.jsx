@@ -8,6 +8,10 @@ function Home() {
   const [wordInput, setWordInput] = useState('');
   const [isRight, setRight] = useState(false);
   const [cases, setCases] = useState([]);
+  const [entireCases, setEntireCases] = useState([]);
+  const [words, setWords] = useState([]);
+  const [submit, setSubmit] = useState(0);
+  const [wrong, setWrong] = useState('');
   const submitInput = (inputValue) => {
     setWordInput(inputValue);
   };
@@ -20,11 +24,12 @@ function Home() {
       .catch((err) => console.log(err));
   }, []);
   useEffect(() => {
+    console.log(words);
     if (wordInput) {
       if (wordInput.toLowerCase() === word.word.toLowerCase()) {
         setRight(true);
       }
-      const wordArr = word.word.split('');
+      const wordArr = word.word.toLowerCase().split('');
       const inputtedArr = wordInput.split('');
       setCases([]);
       inputtedArr.forEach((letter, i) => {
@@ -37,18 +42,57 @@ function Home() {
         }
       });
     }
-  }, [wordInput]);
+  }, [wordInput, submit]);
+
+  useEffect(() => {
+    if (cases.length>0) {
+      setEntireCases([...entireCases, cases]);
+    }
+  }, [cases]);
 
   return (
     <div className="Home">
       <h1>{word.word}</h1>
-      <Input submitInput={submitInput} length={word.word?.length} />
-      <div className="letters">
-        {wordInput
-          ? wordInput.toLowerCase().split('')
-            .map((letter, index) => (
-              <Letter letter={letter} iCase={cases[index]} />
-            ))
+      <Input
+        submitInput={submitInput}
+        words={words}
+        setWords={setWords}
+        length={word.word?.length}
+        submit={submit}
+        setSubmit={setSubmit}
+        setWrong={setWrong}
+        setCases={setCases}
+        setEntireCases={setEntireCases}
+        setWordInput={setWordInput}
+      />
+      <div className="grid">
+        <div
+          className="letters"
+          style={{ 'grid-template-columns': `repeat(${word.word?.length}, 1fr)` }}
+        >
+          {wordInput
+            ? wordInput
+              .toLowerCase()
+              .split('')
+              .map((letter, index) => <Letter letter={letter} iCase={cases[index]} />)
+            : null}
+        </div>
+      </div>
+      <div className="displays">
+        {words.length > 0
+          ? words.map((wo, rowI) => (
+            <div className="result">
+              {wo
+                .toLowerCase()
+                .split('')
+                .map((letter, index) => {
+                  if (submit === rowI) {
+                    return <Letter letter={letter} iCase={cases[index]} />;
+                  }
+                  return <Letter letter={letter} iCase={entireCases[rowI] ? entireCases[rowI][index] : 'wrong'} />;
+                })}
+            </div>
+          ))
           : null}
       </div>
       {isRight && (
@@ -59,6 +103,7 @@ function Home() {
           )
         </p>
       )}
+      { wrong && <p>{wrong}</p> }
     </div>
   );
 }

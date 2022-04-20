@@ -1,7 +1,17 @@
 .letter {
-    margin : 0.5em;
-    padding: 0.5em;
-    border: 1px solid #000;
-    display: inline-block;
+    width: 56px;
+    height: 56px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    line-height: 2rem;
+    font-weight: bold;
+    vertical-align: middle;
+    box-sizing: border-box;
+    text-transform: uppercase;
+    user-select: none;
+    color: #fff;
+
 }
 

@@ -5,8 +5,17 @@ a {
   text-decoration: none;
 }
 .letters {
-  display: flex;
-  flex-direction: row;
+  
+    display: grid;
+    grid-gap: 5px;
+
+}
+.grid {
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
+  grid-gap: 5px;
+  padding: 10px;
+  box-sizing: border-box;
 }
 .about {
   width: 50vw;
@@ -48,4 +57,19 @@ a {
   text-decoration: none;
   border-radius: 8px;
   margin-top: 0.5em;
+}
+
+
+.displays {
+  display: flex;
+  justify-content:center;
+  flex-wrap: wrap;
+  width:50vw
+  /* flex-direction: column; */
+}
+.displays .result {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 0.5em;
+
 }
