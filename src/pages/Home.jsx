@@ -1,7 +1,10 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
+/* eslint-disable no-unused-expressions */
 /* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
 import Input from '../components/input/Input';
 import Letter from '../components/Letter';
+import guses from './guses.png';
 
 function Home() {
   const [word, setWord] = useState({});
@@ -15,22 +18,24 @@ function Home() {
   const submitInput = (inputValue) => {
     setWordInput(inputValue);
   };
-  useEffect(() => {
+  const changeWord = () => {
     fetch('https://random-words-api.vercel.app/word')
       .then((res) => res.json())
       .then((data) => {
         setWord(data[0]);
       })
       .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    changeWord();
   }, []);
   useEffect(() => {
-    console.log(words);
     if (wordInput) {
       if (wordInput.toLowerCase() === word.word.toLowerCase()) {
         setRight(true);
       }
       const wordArr = word.word.toLowerCase().split('');
-      const inputtedArr = wordInput.split('');
+      const inputtedArr = wordInput.toLocaleLowerCase().split('');
       setCases([]);
       inputtedArr.forEach((letter, i) => {
         if (letter === wordArr[i]) {
@@ -45,15 +50,30 @@ function Home() {
   }, [wordInput, submit]);
 
   useEffect(() => {
-    if (cases.length>0) {
+    if (cases.length > 0) {
       setEntireCases([...entireCases, cases]);
     }
   }, [cases]);
 
+  const resetEverything = (newWord = true) => {
+    document.getElementById('input').disabled = false;
+
+    newWord && changeWord();
+    setWordInput('');
+    setCases([]);
+    setEntireCases([]);
+    setWords([]);
+    setSubmit(0);
+    setWrong('');
+    isRight && setRight(!isRight);
+  };
+  // const close = () => {
+  //   setRight(!isRight)
+  // };
   return (
     <div className="Home">
-      <h1>{word.word}</h1>
       <Input
+        isRight={isRight}
         submitInput={submitInput}
         words={words}
         setWords={setWords}
@@ -65,19 +85,7 @@ function Home() {
         setEntireCases={setEntireCases}
         setWordInput={setWordInput}
       />
-      <div className="grid">
-        <div
-          className="letters"
-          style={{ 'grid-template-columns': `repeat(${word.word?.length}, 1fr)` }}
-        >
-          {wordInput
-            ? wordInput
-              .toLowerCase()
-              .split('')
-              .map((letter, index) => <Letter letter={letter} iCase={cases[index]} />)
-            : null}
-        </div>
-      </div>
+
       <div className="displays">
         {words.length > 0
           ? words.map((wo, rowI) => (
@@ -93,17 +101,31 @@ function Home() {
                 })}
             </div>
           ))
-          : null}
+          : (
+            <div>
+              <img className="guses" src={guses} alt="guses" />
+            </div>
+          )}
       </div>
       {isRight && (
-        <p>
-          ( Congrants ... the definition is
-          <br />
-          {word?.definition}
-          )
-        </p>
+      <div>
+        <button onClick={resetEverything} type="button" className="close-definition"><i className="ri-close-circle-line" /></button>
+        <div className="definition">
+          <h1>The Definition</h1>
+          <p>{word?.definition}</p>
+          <button className="try-btn" type="button" onClick={resetEverything}>Play Again</button>
+        </div>
+      </div>
       )}
-      { wrong && <p>{wrong}</p> }
+      { wrong && (
+      <div>
+        <button onClick={resetEverything} type="button" className="close-definition"><i className="ri-close-circle-line" /></button>
+        <div className="wrong">
+          <button className="try-btn-wrong" type="button" onClick={() => resetEverything(false)}>Try Again</button>
+          <button className="try-btn" type="button" onClick={resetEverything}>Another Word</button>
+        </div>
+      </div>
+      )}
     </div>
   );
 }

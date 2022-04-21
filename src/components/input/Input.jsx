@@ -1,9 +1,13 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable max-len */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
+import './style.css';
 
-function Input({ submitInput, length, words, setWords, submit, setSubmit, setWrong, setCases, setEntireCases, setWordInput }) {
+function Input({
+  submitInput, length, words, setWords, submit, setSubmit, setWrong, isRight,
+}) {
   const [input, setInputState] = useState('');
-  // const [submit, setSubmit] = useState(0);
   const handleChange = (e) => {
     setInputState(e.target.value);
   };
@@ -23,12 +27,8 @@ function Input({ submitInput, length, words, setWords, submit, setSubmit, setWro
             handleSubmit(e);
             setSubmit(submit + 1);
           } else {
-            setCases([]);
-            setWrong('try again');
-            setWords([]);
-            setSubmit(0);
-            setEntireCases([]);
-            setWordInput('');
+            !isRight && setWrong('try again');
+            document.getElementById('input').disabled = true;
           }
         }
       });
@@ -43,6 +43,7 @@ function Input({ submitInput, length, words, setWords, submit, setSubmit, setWro
       minLength={length}
       value={input}
       onChange={(e) => handleChange(e)}
+      placeholder={`Guses word with ${length} character`}
     />
   );
 }
