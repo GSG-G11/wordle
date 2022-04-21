@@ -7,7 +7,7 @@
 <br />
 <div align="center">
   <a href="https://famous-heliotrope-4d60ea.netlify.app/">
-    <img src="http://assets.stickpng.com/images/6228c92e9da9446176b9f710.png" alt="Logo" width="60" height="50">
+    <img src="https://cdn.discordapp.com/attachments/899988212993359902/966499405354139678/6228c92e9da9446176b9f710.png" alt="Logo" width="60" height="50">
   </a>
   <h3>Wordle</h3>
 </div>
