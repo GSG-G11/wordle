@@ -1,7 +1,12 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable max-len */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
+import './style.css';
 
-function Input({ submitInput, length }) {
+function Input({
+  submitInput, length, words, setWords, submit, setSubmit, setWrong, isRight,
+}) {
   const [input, setInputState] = useState('');
   const handleChange = (e) => {
     setInputState(e.target.value);
@@ -9,6 +14,7 @@ function Input({ submitInput, length }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     submitInput(input.trim());
+    setWords([...words, input.trim()]);
     setInputState('');
   };
 
@@ -16,11 +22,18 @@ function Input({ submitInput, length }) {
     if (input.trim().length === length) {
       document.getElementById('input').addEventListener('keyup', (e) => {
         if (e.keyCode === 13) {
-          handleSubmit(e);
+          if (submit < 6) {
+            setWrong('');
+            handleSubmit(e);
+            setSubmit(submit + 1);
+          } else {
+            !isRight && setWrong('try again');
+            document.getElementById('input').disabled = true;
+          }
         }
       });
     }
-  }, [input]);
+  }, [input, submit, words]);
 
   return (
     <input
@@ -30,6 +43,7 @@ function Input({ submitInput, length }) {
       minLength={length}
       value={input}
       onChange={(e) => handleChange(e)}
+      placeholder={`Guses word with ${length} character`}
     />
   );
 }

@@ -9,11 +9,7 @@ function Letter({ letter, iCase }) {
     bg = '#C9B458';
   }
 
-  return (
-    <div>
-      <span style={{ background: bg }} className="letter">{letter}</span>
-    </div>
-  );
+  return <span style={{ background: bg }} className="letter">{letter}</span>;
 }
 
 export default Letter;

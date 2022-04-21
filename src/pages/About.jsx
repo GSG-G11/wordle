@@ -4,11 +4,12 @@ function About() {
   return (
     <div className="about">
       <h1>HOW TO PLAY</h1>
-      <p>
+      <p className="info">
         Guess the WORDLE in six tries.
         Each guess must be a valid length-letter word. Hit the enter button to submit.
         After each guess, the color of the tiles will
         change to show how close your guess was to the word.
+        if you guses right word the difinition of word is display.
       </p>
       <hr />
       <div>
