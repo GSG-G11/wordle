@@ -67,9 +67,6 @@ function Home() {
     setWrong('');
     isRight && setRight(!isRight);
   };
-  // const close = () => {
-  //   setRight(!isRight)
-  // };
   return (
     <div className="Home">
       <Input
@@ -81,9 +78,6 @@ function Home() {
         submit={submit}
         setSubmit={setSubmit}
         setWrong={setWrong}
-        setCases={setCases}
-        setEntireCases={setEntireCases}
-        setWordInput={setWordInput}
       />
 
       <div className="displays">
